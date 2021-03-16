@@ -57,6 +57,8 @@ configuration file.
 Configuration
 =============
 
-`ALIAS_FILE_EXTENSION = True` - to automatically add file extension to alias page
+`ALIAS_FILE_EXTENSION = True` - to automatically add file extension to alias page.
 
-`ALIAS_DELIMITER = ','` - default delimiter for aliases
+`ALIAS_DELIMITER = ','` - default delimiter for aliases.
+
+`ALIAS_MAIN_LANG = en` - set if your default site language is not `en`.

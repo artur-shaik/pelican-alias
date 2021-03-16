@@ -21,13 +21,11 @@ class AliasGenerator(object):
         self.alias_delimiter = settings.get('ALIAS_DELIMITER', ',')
         self.add_file_extension = settings.get('ALIAS_FILE_EXTENSION', False)
         self.article_save_as = settings.get('ARTICLE_SAVE_AS')
+        self.default_lang = settings.get('ALIAS_MAIN_LANG', 'en')
 
     def create_alias(self, page, alias):
         # If path starts with a /, remove it
-        if alias[0] == '/':
-            relative_alias = alias[1:]
-        else:
-            relative_alias = alias
+        relative_alias = alias[1:] if alias[0] == '/' else alias
 
         path = os.path.join(self.output_path, relative_alias)
         directory, filename = os.path.split(path)
@@ -47,7 +45,10 @@ class AliasGenerator(object):
 
         logger.info('[alias] Writing to alias file %s' % path)
         with open(path, 'w') as fd:
-            destination = f'{page.lang}/{page.url}' if page.lang else page.url
+            if page.lang and page.lang != self.default_lang:
+                destination = f'{page.lang}/{page.url}'
+            else:
+                destination = page.url
             # if schema is empty then we are working with a local path
             if not urlparse(destination).scheme:
                 # if local path is missing a leading slash then add it
