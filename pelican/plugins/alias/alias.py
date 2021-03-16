@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import os.path
 import logging
-from platform import python_version
+import os.path
 from itertools import chain
-
-if float(python_version()[0:3]) < 3:
-    from urlparse import urlparse
-else:
-    from urllib.parse import urlparse
+from urllib.parse import urlparse
 
 from pelican import signals
 
