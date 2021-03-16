@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 import logging
 import os.path
-from itertools import chain
 from urllib.parse import urlparse
 
 from pelican import signals
@@ -20,6 +19,8 @@ class AliasGenerator(object):
         self.output_path = output_path
         self.context = context
         self.alias_delimiter = settings.get('ALIAS_DELIMITER', ',')
+        self.add_file_extension = settings.get('ALIAS_FILE_EXTENSION', False)
+        self.article_save_as = settings.get('ARTICLE_SAVE_AS')
 
     def create_alias(self, page, alias):
         # If path starts with a /, remove it
@@ -38,6 +39,11 @@ class AliasGenerator(object):
 
         if filename == '':
             path = os.path.join(path, 'index.html')
+
+        if self.add_file_extension:
+            extension = self.article_save_as.split('.')[-1]
+            if extension and not path.endswith(extension):
+                path = f'{path}.{extension}'
 
         logger.info('[alias] Writing to alias file %s' % path)
         with open(path, 'w') as fd:

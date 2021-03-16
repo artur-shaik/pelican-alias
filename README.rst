@@ -53,3 +53,10 @@ configuration file.
     Date: 2013-06-01 21:10
     URL: https://pypi.python.org/pypi/pelican-alias
     Alias: /pypi/
+
+Configuration
+=============
+
+`ALIAS_FILE_EXTENSION = True` - to automatically add file extension to alias page
+
+`ALIAS_DELIMITER = ','` - default delimiter for aliases
