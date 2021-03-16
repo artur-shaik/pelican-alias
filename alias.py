@@ -41,7 +41,7 @@ class AliasGenerator(object):
 
         logger.info('[alias] Writing to alias file %s' % path)
         with open(path, 'w') as fd:
-            destination = page.url
+            destination = f'{page.lang}/{page.url}' if page.lang else page.url
             # if schema is empty then we are working with a local path
             if not urlparse(destination).scheme:
                 # if local path is missing a leading slash then add it
@@ -53,8 +53,6 @@ class AliasGenerator(object):
         pages = (
             self.context['pages'] + self.context['articles'] +
             self.context.get('hidden_pages', []))
-
-        pages = pages + list(chain(*[page.translations for page in pages]))
 
         for page in pages:
             aliases = page.metadata.get('alias', [])
